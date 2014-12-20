@@ -64,6 +64,7 @@ static inline int window_alloc_colors (zbar_window_t *w)
 int _zbar_window_resize (zbar_window_t *w)
 {
     _zbar_window_center(w);
+    _zbar_window_set_on_top(w);
     window_state_t *x = w->state;
     if(!x)
         return(0);
@@ -117,6 +118,29 @@ int _zbar_window_center (zbar_window_t *w)
     int window_x = (WidthOfScreen(attr.screen) - w->width) / 2;
     int window_y = (HeightOfScreen(attr.screen) - w->height) / 2;
     XMoveWindow(w->display, w->xwin, window_x, window_y);
+
+    return(0);
+}
+
+int _zbar_window_set_on_top (zbar_window_t *w)
+{
+    XEvent event;
+    event.xclient.type = ClientMessage;
+    event.xclient.serial = 0;
+    event.xclient.send_event = True;
+    event.xclient.display = w->display;
+    event.xclient.window  = w->xwin;
+    event.xclient.message_type = XInternAtom (w->display, "_NET_WM_STATE", False);
+    event.xclient.format = 32;
+
+    event.xclient.data.l[0] = 1;
+    event.xclient.data.l[1] = XInternAtom (w->display, "_NET_WM_STATE_ABOVE", False);
+    event.xclient.data.l[2] = 0;
+    event.xclient.data.l[3] = 0;
+    event.xclient.data.l[4] = 0;
+
+    XSendEvent (w->display, DefaultRootWindow(w->display), False,
+                       SubstructureRedirectMask|SubstructureNotifyMask, &event);
 
     return(0);
 }
