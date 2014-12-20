@@ -124,6 +124,8 @@ int _zbar_window_center (zbar_window_t *w)
 
 int _zbar_window_set_on_top (zbar_window_t *w)
 {
+    XRaiseWindow(w->display, w->xwin);
+
     XEvent event;
     event.xclient.type = ClientMessage;
     event.xclient.serial = 0;
