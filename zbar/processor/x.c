@@ -68,26 +68,11 @@ static inline int x_handle_event (zbar_processor_t *proc)
             return(_zbar_processor_handle_input(proc, -1));
         }
 
-    case KeyPress: {
-        KeySym key = XLookupKeysym(&ev.xkey, 0);
-        if(IsModifierKey(key))
-            break;
-        if((key & 0xff00) == 0xff00)
-            key &= 0x00ff;
-        zprintf(16, "KeyPress(%04lx)\n", key);
-        /* FIXME this doesn't really work... */
-        return(_zbar_processor_handle_input(proc, key & 0xffff));
-    }
     case ButtonPress: {
         zprintf(16, "ButtonPress(%d)\n", ev.xbutton.button);
-        int idx = 1;
-        switch(ev.xbutton.button) {
-        case Button2: idx = 2; break;
-        case Button3: idx = 3; break;
-        case Button4: idx = 4; break;
-        case Button5: idx = 5; break;
-        }
-        return(_zbar_processor_handle_input(proc, idx));
+        zbar_window_attach(proc->window, NULL, 0);
+        proc->xwin = 0;
+        exit(0);
     }
 
     case DestroyNotify:

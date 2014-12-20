@@ -27,7 +27,7 @@
 #include <ctype.h>
 
 #ifndef ZBAR_OVERLAY_FONT
-# define ZBAR_OVERLAY_FONT "-*-fixed-medium-r-*-*-*-120-75-75-*-*-ISO8859-1"
+# define ZBAR_OVERLAY_FONT "-*-Ubuntu-*-r-*-*-24-*-*-*-*-*-*-*"
 #endif
 
 static inline unsigned long window_alloc_color (zbar_window_t *w,
@@ -58,25 +58,6 @@ static inline int window_alloc_colors (zbar_window_t *w)
 
     x->logo_colors[0] = window_alloc_color(w, cmap, 0xd709, 0x3333, 0x3333);
     x->logo_colors[1] = window_alloc_color(w, cmap, 0xa3d6, 0x0000, 0x0000);
-    return(0);
-}
-
-static inline int window_hide_cursor (zbar_window_t *w)
-{
-    /* FIXME this seems lame...there must be a better way */
-    Pixmap empty = XCreatePixmap(w->display, w->xwin, 1, 1, 1);
-    GC gc = XCreateGC(w->display, empty, 0, NULL);
-    XDrawPoint(w->display, empty, gc, 0, 0);
-    XColor black;
-    memset(&black, 0, sizeof(black));
-    int screen = DefaultScreen(w->display);
-    black.pixel = BlackPixel(w->display, screen);
-    Cursor cursor =
-        XCreatePixmapCursor(w->display, empty, empty, &black, &black, 0, 0);
-    XDefineCursor(w->display, w->xwin, cursor);
-    XFreeCursor(w->display, cursor);
-    XFreeGC(w->display, gc);
-    XFreePixmap(w->display, empty);
     return(0);
 }
 
@@ -188,7 +169,6 @@ int _zbar_window_attach (zbar_window_t *w,
     _zbar_window_resize(w);
 
     window_alloc_colors(w);
-    window_hide_cursor(w);
 
     /* load overlay font */
     x->font = XLoadQueryFont(w->display, ZBAR_OVERLAY_FONT);

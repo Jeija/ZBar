@@ -87,6 +87,10 @@ static void window_outline_symbol (zbar_window_t *w,
 
 static inline int window_draw_overlay (zbar_window_t *w)
 {
+    point_t p = { w->width / 2, -1 };
+    char text[] = "Klicken zum Abbrechen";
+    _zbar_window_draw_text(w, 2, p, text);
+
     if(!w->overlay)
         return(0);
     if(w->overlay >= 1 && w->image && w->image->syms) {
