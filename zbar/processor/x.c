@@ -70,9 +70,13 @@ static inline int x_handle_event (zbar_processor_t *proc)
 
     case ButtonPress: {
         zprintf(16, "ButtonPress(%d)\n", ev.xbutton.button);
-        zbar_window_attach(proc->window, NULL, 0);
-        proc->xwin = 0;
-        exit(0);
+        if (ev.xbutton.button == 1)
+        {
+            zbar_window_attach(proc->window, NULL, 0);
+            proc->xwin = 0;
+            exit(0);
+        }
+        break;
     }
 
     case DestroyNotify:
