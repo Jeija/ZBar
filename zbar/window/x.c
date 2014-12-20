@@ -259,7 +259,9 @@ int _zbar_window_draw_polygon (zbar_window_t *w,
     }
     xpts[npts] = xpts[0];
 
+    XSetLineAttributes(w->display, xs->gc, 7, LineSolid, CapRound, JoinRound);
     XDrawLines(w->display, w->xwin, xs->gc, xpts, npts + 1, CoordModeOrigin);
+    XSetLineAttributes(w->display, xs->gc, 0, LineSolid, CapButt, JoinMiter);
 
     return(0);
 }
