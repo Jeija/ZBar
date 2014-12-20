@@ -82,6 +82,7 @@ static inline int window_hide_cursor (zbar_window_t *w)
 
 int _zbar_window_resize (zbar_window_t *w)
 {
+    _zbar_window_center(w);
     window_state_t *x = w->state;
     if(!x)
         return(0);
@@ -123,6 +124,19 @@ int _zbar_window_resize (zbar_window_t *w)
         x->logo_z[i].x = x0 + lbw * zx[i];
         x->logo_z[i].y = y0 + lbw * zy[i];
     }
+
+    return(0);
+}
+
+int _zbar_window_center (zbar_window_t *w)
+{
+    /* center window */
+    XWindowAttributes attr;
+    XGetWindowAttributes(w->display, w->xwin, &attr);
+    int window_x = (WidthOfScreen(attr.screen) - w->width) / 2;
+    int window_y = (HeightOfScreen(attr.screen) - w->height) / 2;
+    XMoveWindow(w->display, w->xwin, window_x, window_y);
+
     return(0);
 }
 

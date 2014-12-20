@@ -131,6 +131,7 @@ static inline point_t window_scale_pt (zbar_window_t *w,
 extern int _zbar_window_attach(zbar_window_t*, void*, unsigned long);
 extern int _zbar_window_expose(zbar_window_t*, int, int, int, int);
 extern int _zbar_window_resize(zbar_window_t*);
+extern int _zbar_window_center(zbar_window_t*);
 extern int _zbar_window_clear(zbar_window_t*);
 extern int _zbar_window_begin(zbar_window_t*);
 extern int _zbar_window_end(zbar_window_t*);
