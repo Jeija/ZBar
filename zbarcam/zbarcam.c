@@ -106,7 +106,6 @@ static void data_handler (zbar_image_t *img, const void *userdata)
             continue;
 
         if(!format) {
-            printf("%s:", zbar_get_symbol_name(type));
             if(fwrite(zbar_symbol_get_data(sym),
                       zbar_symbol_get_data_length(sym),
                       1, stdout) != 1)
@@ -125,7 +124,6 @@ static void data_handler (zbar_image_t *img, const void *userdata)
             if(fwrite(xml_buf, xml_len, 1, stdout) != 1)
                 continue;
         }
-        printf("\n");
         n++;
     }
 
