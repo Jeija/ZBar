@@ -48,7 +48,7 @@ AC_DEFINE_UNQUOTED([LIB_VERSION_REVISION],
   [Library revision])
 
 AM_CPPFLAGS="-I$srcdir/include -O"
-AM_CFLAGS="-Wall -Wno-parentheses -Werror -Wstrict-aliasing"
+AM_CFLAGS="-Wall -Wno-parentheses -Wstrict-aliasing"
 AM_CXXFLAGS="$AM_CFLAGS"
 AC_SUBST([AM_CPPFLAGS])
 AC_SUBST([AM_CFLAGS])
